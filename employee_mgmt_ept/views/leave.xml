@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_leave_tree" model="ir.ui.view">
+        <field name="name">leave.tree</field>
+        <field name="model">employee.leave.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Leave">
+                <field name="employee_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_leave_form" model="ir.ui.view">
+        <field name="name">leave.form</field>
+        <field name="model">employee.leave.ept</field>
+        <field name="arch" type="xml">
+            <form string="Leave Demo">
+                <header>
+                    <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <group>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="leave_description"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_leave_search" model="ir.ui.view">
+        <field name="name">leave.search</field>
+        <field name="model">employee.leave.ept</field>
+        <field name="arch" type="xml">
+            <search string="Leave Demo">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <group string="Group by">
+                    <filter string="Employee" name="filter_employee" domain="[]" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Department" name="filter_department" domain="[]"
+                            context="{'group_by': 'department_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_leave" model="ir.actions.act_window">
+        <field name="name">Leave Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.leave.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_leave_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter leave details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_leave" name="leaves" parent="menu_employee" action="action_leave"/>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_state_tree" model="ir.ui.view">
+        <field name="name">res.state.tree</field>
+        <field name="model">res.state.ept</field>
+        <field name="arch" type="xml">
+            <tree string="state">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_state_form" model="ir.ui.view">
+        <field name="name">res.state.form</field>
+        <field name="model">res.state.ept</field>
+        <field name="arch" type="xml">
+            <form string="State Demo">
+                <group>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="country_id"/>
+                </group>
+                <notebook>
+                    <tree string="Cities">
+                        <field name="city_ids"/>
+                    </tree>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_state_search" model="ir.ui.view">
+        <field name="name">res.state.search</field>
+        <field name="model">res.state.ept</field>
+        <field name="arch" type="xml">
+            <search string="state Demo">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="country_id"/>
+                 <group expand="0" string="Group by">
+                    <filter string="Country" name="filter_country" domain="[]" context="{'group_by': 'country_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_state" model="ir.actions.act_window">
+        <field name="name">state Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.state.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_state_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter state details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_state" name="States" parent="menu_localization" action="action_state"/>
+</odoo>

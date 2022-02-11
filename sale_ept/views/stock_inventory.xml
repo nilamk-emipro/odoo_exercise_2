@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_inventory_tree" model="ir.ui.view">
+        <field name="name">stock.inventory.tree</field>
+        <field name="model">stock.inventory.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Inventory">
+                <field name="name"/>
+                <field name="location_id"/>
+                <field name="inventory_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_inventory_form" model="ir.ui.view">
+        <field name="name">stock.inventory.form</field>
+        <field name="model">stock.inventory.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock Inventory">
+                <header>
+                    <button name="start_inventory" string="Start Inventory" type="object"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="location_id"/>
+                        <field name="inventory_date"/>
+                    </group>
+                    <group>
+                        <button name="inventory_validate" string="Validate" type="object" attrs="{'invisible': [('state', '!=', 'InProgress')]}"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Inventory Lines" name="inventory_line">
+                        <field name="inventory_line_ids">
+                            <tree string="Inventory Lines" editable="bottom">
+                                <field name="product_id"/>
+                                <field name="available_qty"/>
+                                <field name="counted_product_qty"/>
+                                <field name="difference"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Stock Move Lines" name="stock_move_line">
+                        <field name="stock_move_ids">
+                            <tree string="Stock Move Lines">
+                                <field name="product_id"/>
+                                <field name="uom_id"/>
+                                <field name="source_location_id"/>
+                                <field name="destination_location_id"/>
+                                <field name="qty_to_deliver"/>
+                                <field name="qty_done"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_inventory_search" model="ir.ui.view">
+        <field name="name">stock.inventory.search</field>
+        <field name="model">stock.inventory.ept</field>
+        <field name="arch" type="xml">
+            <search string="Stock Inventory">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_inventory" model="ir.actions.act_window">
+        <field name="name">Stock Inventory</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.inventory.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_inventory_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Stock Inventory details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_inventory" name="Stock Inventory" parent="menu_stock"
+              action="action_stock_inventory"/>
+</odoo>

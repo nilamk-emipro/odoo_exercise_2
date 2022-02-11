@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_warehouse_tree" model="ir.ui.view">
+        <field name="name">stock.warehouse.tree</field>
+        <field name="model">stock.warehouse.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Warehouse">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_warehouse_form" model="ir.ui.view">
+        <field name="name">stock.warehouse.form</field>
+        <field name="model">stock.warehouse.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock Warehouse">
+                <group>
+                    <field name="name"/>
+                    <field name="short_code"/>
+                    <field name="address_id"/>
+                    <field name="stock_location_id"/>
+                    <field name="view_location_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_warehouse_search" model="ir.ui.view">
+        <field name="name">stock.warehouse.search</field>
+        <field name="model">stock.warehouse.ept</field>
+        <field name="arch" type="xml">
+            <search string="Stock Warehouse">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_warehouse" model="ir.actions.act_window">
+        <field name="name">Stock Warehouse</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.warehouse.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_warehouse_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Stock Warehouse details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_warehouse" name="Stock Warehouse" parent="menu_configuration" action="action_stock_warehouse"/>
+</odoo>

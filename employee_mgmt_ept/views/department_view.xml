@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_department_tree" model="ir.ui.view">
+        <field name="name">department.tree</field>
+        <field name="model">employee.department.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Department">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_department_form" model="ir.ui.view">
+        <field name="name">department.form</field>
+        <field name="model">employee.department.ept</field>
+        <field name="arch" type="xml">
+            <form string="Department Demo">
+                <group>
+                    <field name="name"/>
+                    <field name="department_manager_id"/>
+                </group>
+                <notebook>
+                    <tree string="Employee">
+                        <field name="employee_ids"/>
+                    </tree>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_department_search" model="ir.ui.view">
+        <field name="name">department.search</field>
+        <field name="model">employee.department.ept</field>
+        <field name="arch" type="xml">
+            <search string="Department Demo">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_department" model="ir.actions.act_window">
+        <field name="name">Department Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.department.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_department_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter department details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_root_HR" name="HR"/>
+    <menuitem id="menu_employee" name="Employees" parent="menu_root_HR"/>
+    <menuitem id="menu_department" name="Department" parent="menu_employee" action="action_department"/>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_student_tree" model="ir.ui.view">
+        <field name="name">student.tree</field>
+        <field name="model">student.ept</field>
+        <field name="arch" type="xml">
+            <tree string="student">
+                <field name="name"/>
+                <field name="birthdate"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">student.form</field>
+        <field name="model">student.ept</field>
+        <field name="arch" type="xml">
+            <form string="student Demo">
+                <group>
+                    <field name="name"/>
+                    <field name="student_class"/>
+                    <field name="birthdate"/>
+                </group>
+                <notebook>
+                    <tree string="Course">
+                        <field name="course_ids"/>
+                    </tree>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_search" model="ir.ui.view">
+        <field name="name">student.search</field>
+        <field name="model">student.ept</field>
+        <field name="arch" type="xml">
+            <search string="student Demo">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_student" model="ir.actions.act_window">
+        <field name="name">student Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">student.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_student_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter students details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_root_student_info" name="Student Info"/>
+    <menuitem id="menu_student_details" name="Student Details" parent="menu_root_student_info"/>
+    <menuitem id="menu_students" name="Students" parent="menu_student_details" action="action_student"/>
+</odoo>

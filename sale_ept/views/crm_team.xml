@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_crm_team_tree" model="ir.ui.view">
+        <field name="name">crm.team.ept.tree</field>
+        <field name="model">crm.team.ept</field>
+        <field name="arch" type="xml">
+            <tree string="CRM Team">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_team_form" model="ir.ui.view">
+        <field name="name">crm.team.ept.form</field>
+        <field name="model">crm.team.ept</field>
+        <field name="arch" type="xml">
+            <form string="CRM Team Demo">
+                <group>
+                    <field name="name"/>
+                    <field name="team_leader_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_team_search" model="ir.ui.view">
+        <field name="name">crm.team.ept.search</field>
+        <field name="model">crm.team.ept</field>
+        <field name="arch" type="xml">
+            <search string="CRM Team Demo">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_crm_team" model="ir.actions.act_window">
+        <field name="name">CRM Team Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.team.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_crm_team_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter CRM Team details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_crm_team" name="CRM" parent="menu_sales" action="action_crm_team"/>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_uom_tree" model="ir.ui.view">
+        <field name="name">product.uom.category.tree</field>
+        <field name="model">product.uom.category.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Product Uom Category">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_uom_category_form" model="ir.ui.view">
+        <field name="name">product.uom.category.form</field>
+        <field name="model">product.uom.category.ept</field>
+        <field name="arch" type="xml">
+            <form string="Product uom Category">
+                <group>
+                    <field name="name"/>
+                </group>
+                <notebook>
+                    <tree string="UOM">
+                        <field name="uom_ids"/>
+                    </tree>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_uom_category_search" model="ir.ui.view">
+        <field name="name">product.uom.category.search</field>
+        <field name="model">product.uom.category.ept</field>
+        <field name="arch" type="xml">
+            <search string="Product uom Category">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_uom_category" model="ir.actions.act_window">
+        <field name="name">Product uom</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.uom.category.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_uom_category_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Product uom Category details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_productUOM" name="Product details" parent="menu_root"/>
+    <menuitem id="menu_product_uom_category" name="UOM Category" parent="menu_productUOM" action="action_product_uom_category"/>
+
+</odoo>

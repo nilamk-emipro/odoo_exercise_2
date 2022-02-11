@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_location_tree" model="ir.ui.view">
+        <field name="name">stock.location.tree</field>
+        <field name="model">stock.location.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock location">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_location_form" model="ir.ui.view">
+        <field name="name">stock.location.form</field>
+        <field name="model">stock.location.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock location">
+                <group>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="address_type"/>
+                    <field name="is_scrap_location"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_location_search" model="ir.ui.view">
+        <field name="name">stock.location.search</field>
+        <field name="model">stock.location.ept</field>
+        <field name="arch" type="xml">
+            <search string="Stock location">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_location" model="ir.actions.act_window">
+        <field name="name">Stock location</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.location.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_location_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Stock location details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock" name="Inventory" parent="menu_root"/>
+    <menuitem id="menu_configuration" name="Configuration" parent="menu_stock"/>
+    <menuitem id="menu_stock_location" name="Stock location" parent="menu_configuration" action="action_stock_location"/>
+</odoo>

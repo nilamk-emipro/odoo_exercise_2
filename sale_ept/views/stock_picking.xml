@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_picking_tree" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Stock picking">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking.ept</field>
+        <field name="arch" type="xml">
+            <form string="Stock picking">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="transaction_type"/>
+                        <field name="transaction_date"/>
+                        <field name="back_order_id"/>
+                    </group>
+                    <group>
+                        <button name="validate" string="Validate" type="object"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Move Lines" name="move_line">
+                        <field name="move_ids"></field>
+                    </page>
+                    <page string="Sale Order Lines" name="sale_order_line">
+                        <field name="sale_order_id"></field>
+                    </page>
+                    <page string="Purchase Order Lines" name="purchase_order_line">
+                        <field name="purchase_order_id">
+                            <tree string="order">
+                                <field name="purchase_order_line_ids">
+                                    <tree string="order lines">
+                                        <field name="name"/>
+                                        <field name="order_no_id"/>
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="cost_price"/>
+                                        <field name="uom_id"/>
+                                    </tree>
+                                </field>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_search" model="ir.ui.view">
+        <field name="name">stock.picking.search</field>
+        <field name="model">stock.picking.ept</field>
+        <field name="arch" type="xml">
+            <search string="Stock picking">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_picking" model="ir.actions.act_window">
+        <field name="name">Stock picking In</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('transaction_type','=','In')]</field>
+        <field name="search_view_id" ref="view_stock_picking_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Stock picking details..</p>
+        </field>
+    </record>
+
+    <record id="action_stock_picking_out" model="ir.actions.act_window">
+        <field name="name">Stock picking Out</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('transaction_type','=','Out')]</field>
+        <field name="search_view_id" ref="view_stock_picking_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Stock picking details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_picking_root" name="Stock" parent="menu_root"/>
+    <menuitem id="menu_stock_picking" name="Stock Picking IN" parent="menu_stock_picking_root"
+              action="action_stock_picking"/>
+    <menuitem id="menu_stock_picking_out" name="Stock Picking Out" parent="menu_stock_picking_root"
+              action="action_stock_picking_out"/>
+</odoo>

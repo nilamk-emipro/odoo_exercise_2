@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_product_category_tree" model="ir.ui.view">
+        <field name="name">product.tree</field>
+        <field name="model">product.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Product">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_form" model="ir.ui.view">
+        <field name="name">product.form</field>
+        <field name="model">product.ept</field>
+        <field name="arch" type="xml">
+            <form string="Product Demo">
+                <group>
+                    <field name="product_stock"/>
+                    <button name="update_stock" string="Update Stock" type="object" class="btn-primary"/>
+                    <button name="%(sale_ept.action_product_update)d" string="Update Stock" type="action" class="btn-primary"/>
+                </group>
+                <group>
+                    <field name="name"/>
+                    <field name="sku"/>
+                    <field name="weight"/>
+                    <field name="length"/>
+                    <field name="volume"/>
+                    <field name="width"/>
+                    <field name="barcode"/>
+                    <field name="product_type"/>
+                    <field name="sale_price"/>
+                    <field name="cost_price"/>
+                    <field name="category_id"/>
+                    <field name="uom_id"/>
+                    <field name="description"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_search" model="ir.ui.view">
+        <field name="name">product.search</field>
+        <field name="model">product.ept</field>
+        <field name="arch" type="xml">
+            <search string="Product Demo">
+                <field name="name"/>
+                <field name="sku"/>
+                <field name="barcode"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product" model="ir.actions.act_window">
+        <field name="name">Product Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Product details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sales" name="Sales" parent="menu_root"/>
+    <menuitem id="menu_product" name="Products" parent="menu_sales" action="action_product"/>
+</odoo>

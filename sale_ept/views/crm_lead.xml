@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_crm_lead_tree" model="ir.ui.view">
+        <field name="name">crm.lead.ept.tree</field>
+        <field name="model">crm.lead.ept</field>
+        <field name="arch" type="xml">
+            <tree string="CRM lead">
+                <field name="partner_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_form" model="ir.ui.view">
+        <field name="name">crm.lead.ept.form</field>
+        <field name="model">crm.lead.ept</field>
+        <field name="arch" type="xml">
+            <form string="CRM lead">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="team_id"/>
+                        <field name="user_id"/>
+                        <field name="won_date"/>
+                        <field name="lost_reason"/>
+                        <field name="next_followup_date"/>
+                    </group>
+                    <group>
+                        <button name="state_qualified" string="Qualified" type="object" attrs="{'invisible': [('state', '!=', 'New')]}"/>
+                        <button name="state_proposition" string="Proposition" type="object" attrs="{'invisible': [('state', '!=', 'Qualified')]}"/>
+                        <button name="state_won" string="Won" type="object" attrs="{'invisible': [('state', '!=', 'Proposition')]}"/>
+                        <button name="state_lost" string="Lost" type="object" attrs="{'invisible': [('state', '!=', 'Proposition')]}"/>
+                        <button name="generate_sale_quotation" string="Generate Sales Quotation" type="object" attrs="{'invisible': [('state', '!=', 'Won')]}"/>
+                        <button name="generate_customer" string="Generate Customer" type="object" attrs="{'invisible': [('state', '!=', 'Won')]}"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Orders" name="orders">
+                        <field name="order_ids">
+                            <tree string="orders">
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="sale_order_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Lead lines" name="Lead Lines">
+                        <field name="lead_line_ids">
+                            <tree string="Lead Lines">
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="expected_sell_qty"/>
+                                <field name="uom_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Partner Details" name="Partner Details">
+                        <group>
+                            <field name="partner_name"/>
+                            <field name="partner_email"/>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                            <field name="city_id"/>
+                            <field name="partner_phone_no"/>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_search" model="ir.ui.view">
+        <field name="name">crm.lead.ept.search</field>
+        <field name="model">crm.lead.ept</field>
+        <field name="arch" type="xml">
+            <search string="CRM lead Demo">
+                <field name="partner_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_crm_lead" model="ir.actions.act_window">
+        <field name="name">CRM lead Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_crm_lead_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter CRM lead details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_crm_lead" name="CRM Lead" parent="menu_sales" action="action_crm_lead"/>
+</odoo>

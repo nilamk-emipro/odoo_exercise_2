@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Order">
+                <field name="name"/>
+                <field name="total_weight"/>
+                <field name="total_volume"/>
+                <field name="order_total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sale_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order.ept</field>
+        <field name="arch" type="xml">
+            <form string="Sale Order">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_delivery_order"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-truck icon">
+                            <field name="delivery_order_count" widget="statinfo" string="Delivery Order"/>
+                        </button>
+                        <button name="action_view_stock_move"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-briefcase">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Stock Move</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="partner_invoice_id"/>
+                            <field name="partner_shipping_id"/>
+                            <field name="sale_order_date"/>
+                            <field name="sales_persons"/>
+                            <field name="total_weight"/>
+                            <field name="total_volume"/>
+                            <field name="order_total"/>
+                            <field name="warehouse_id"/>
+                        </group>
+                        <group>
+                            <field name="lead_id"/>
+                            <button name="order_confirm" string="Confirm" type="object"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines" name="order_line">
+                            <field name="order_line_ids">
+                                <tree string="order lines">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal_without_tax"/>
+                                    <field name="delivered_qty"/>
+                                    <field name="cancelled_qty"/>
+                                    <field name="warehouse_id"/>
+                                </tree>
+                                <form string="Sales Order Line">
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="order_no_id"/>
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="unit_price"/>
+                                        <field name="uom_id"/>
+                                        <field name="subtotal_without_tax"/>
+                                        <field name="delivered_qty"/>
+                                        <field name="cancelled_qty"/>
+                                        <field name="warehouse_id"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Picking Lines" name="picking_line">
+                            <field name="picking_ids">
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_order_search" model="ir.ui.view">
+        <field name="name">sale.order.search</field>
+        <field name="model">sale.order.ept</field>
+        <field name="arch" type="xml">
+            <search string="Sale Order Demo">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="sale_order_date"/>
+                <group expand="0" string="Group by">
+                    <filter string="Customer" name="filter_customer" domain="[]" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_order" model="ir.actions.act_window">
+        <field name="name">Sale Order Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_sale_order_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Sale Order details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_order" name="Orders" parent="menu_sales" action="action_sale_order"/>
+</odoo>

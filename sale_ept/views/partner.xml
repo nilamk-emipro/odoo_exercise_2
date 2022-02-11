@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_partner_tree" model="ir.ui.view">
+        <field name="name">partner.tree</field>
+        <field name="model">res.partner.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Product">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner.ept</field>
+        <field name="arch" type="xml">
+            <form string="Partners">
+                <header>
+                    <button name="create_country" string="Create New Country" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="street1"/>
+                            <field name="street2"/>
+                            <field name="country"/>
+                            <field name="state"/>
+                            <field name="city"/>
+                            <field name="zipcode"/>
+                            <field name="email"/>
+                            <field name="mobile"/>
+                            <field name="phone"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar"/>
+                            <field name="website"/>
+                            <field name="parent_id"/>
+                            <!--                            <field name="address_type" widget="radio" options="{'horizontal':true}"/>-->
+                        </group>
+                    </group>
+
+                    <notebook colspan="4">
+                        <!--                        <kanban class="o_kanban_mobile">-->
+                        <!--                            <field name="child_ids" widget="one2many">-->
+                        <!--                            </field>-->
+                        <!--                        </kanban>-->
+                        <!--                    </notebook>-->
+                        <!--                    <notebook>-->
+                        <page string="Partners">
+                            <field name="child_ids" widget="one2many">
+                                <tree string="partners">
+                                    <field name="image" widget="image" class="oe_avatar"/>
+                                    <field name="name"/>
+                                    <field name="email"/>
+                                    <field name="mobile"/>
+                                    <field name="website"/>
+                                </tree>
+                                <form string="partners">
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="street1"/>
+                                            <field name="street2"/>
+                                            <field name="country"/>
+                                            <field name="state"/>
+                                            <field name="city"/>
+                                            <field name="zipcode"/>
+                                            <field name="email"/>
+                                            <field name="mobile"/>
+                                            <field name="phone"/>
+                                        </group>
+                                        <group>
+                                            <field name="image" widget="image" class="oe_avatar"/>
+                                            <field name="website"/>
+                                            <field name="address_type" widget="radio" options="{'horizontal':true}"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_partner_search" model="ir.ui.view">
+        <field name="name">partner.search</field>
+        <field name="model">res.partner.ept</field>
+        <field name="arch" type="xml">
+            <search string="Partner Demo">
+                <field name="name"/>
+                <field name="country"/>
+                <field name="state"/>
+                <field name="email"/>
+                <filter name="filter_active" string="Active" domain="[('active','=',True)]"/>
+                <filter name="filter_Inactive" string="InActive" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group by">
+                    <filter string="Country" name="filter_country" domain="[]" context="{'group_by': 'country'}"/>
+                    <filter string="State" name="filter_country" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="City" name="filter_country" domain="[]" context="{'group_by': 'city'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_partner" model="ir.actions.act_window">
+        <field name="name">Partner Demo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.ept</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('parent_id','=',False)]</field>
+        <field name="search_view_id" ref="view_partner_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Product details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_customer" name="Customer" parent="menu_sales" action="action_partner"/>
+</odoo>
