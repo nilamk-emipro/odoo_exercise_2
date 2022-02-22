@@ -18,7 +18,8 @@
                 <group>
                     <field name="product_stock"/>
                     <button name="update_stock" string="Update Stock" type="object" class="btn-primary"/>
-                    <button name="%(sale_ept.action_product_update)d" string="Update Stock" type="action" class="btn-primary"/>
+                    <button name="%(sale_ept.action_product_update)d" string="Update Stock" type="action"
+                            class="btn-primary"/>
                 </group>
                 <group>
                     <field name="name"/>
@@ -35,6 +36,11 @@
                     <field name="uom_id"/>
                     <field name="description"/>
                 </group>
+                <notebook>
+                    <page string="Accounting" name="Accounting">
+                        <field name="tax_ids" widget="many2many_tags"/>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>

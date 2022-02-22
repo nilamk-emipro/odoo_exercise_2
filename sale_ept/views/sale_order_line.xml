@@ -15,7 +15,7 @@
         <field name="model">sale.order.line.ept</field>
         <field name="arch" type="xml">
             <form string="Sale Order Line">
-                  <header>
+                <header>
                     <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
                 </header>
                 <group>
@@ -29,7 +29,13 @@
                     <field name="delivered_qty"/>
                     <field name="cancelled_qty"/>
                     <field name="warehouse_id"/>
+                    <field name="subtotal_with_tax"/>
                 </group>
+                <notebook>
+                    <page string="Accounting" name="Accounting">
+                        <field name="tax_ids" widget="many2many_tags"/>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>

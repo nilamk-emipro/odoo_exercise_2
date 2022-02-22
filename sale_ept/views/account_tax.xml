@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_account_tax_tree" model="ir.ui.view">
+        <field name="name">account.tax.tree</field>
+        <field name="model">account.tax.ept</field>
+        <field name="arch" type="xml">
+            <tree string="Account Tax">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_tax_form" model="ir.ui.view">
+        <field name="name">account.tax.form</field>
+        <field name="model">account.tax.ept</field>
+        <field name="arch" type="xml">
+            <form string="Account Tax">
+                <group>
+                    <field name="name"/>
+                    <field name="tax_use"/>
+                    <field name="tax_value"/>
+                    <field name="tax_amount_type"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_tax_search" model="ir.ui.view">
+        <field name="name">account.tax.search</field>
+        <field name="model">account.tax.ept</field>
+        <field name="arch" type="xml">
+            <search string="Account Tax">
+                <field name="name"/>
+                <group expand="0" string="Group by">
+                    <filter string="Tax Use" name="filter_tax_use" domain="[]" context="{'group_by': 'tax_use'}"/>
+                    <filter string="Tax Amount Type" name="filter_tax_amount_type" domain="[]" context="{'group_by': 'tax_amount_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_tax" model="ir.actions.act_window">
+        <field name="name">Account Tax</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.tax.ept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_tax_search"/>
+        <field name="help" type="html">
+            <p>Here You can enter Account Tax details..</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_account" name="Account" parent="menu_root"/>
+    <menuitem id="menu_account_tax" name="Account Tax" parent="menu_account" action="action_account_tax" />
+</odoo>

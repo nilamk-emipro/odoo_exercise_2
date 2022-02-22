@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="product_new_product_1" model="product.product">
+            <field name="name">Shipping product</field>
+        </record>
+        <record id="product_new_deposit" model="product.product">
+            <field name="name">6 Pack Deposit</field>
+        </record>
+    </data>
+</odoo>

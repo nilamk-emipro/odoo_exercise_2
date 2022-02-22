@@ -9,6 +9,8 @@
                 <field name="total_weight"/>
                 <field name="total_volume"/>
                 <field name="order_total"/>
+                <field name="total_tax"/>
+                <field name="total_amount"/>
             </tree>
         </field>
     </record>
@@ -32,7 +34,7 @@
                         <button name="action_view_stock_move"
                                 type="object"
                                 class="oe_stat_button"
-                                icon="fa-briefcase">
+                                icon="fa-cubes">
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_text">Stock Move</span>
                             </div>
@@ -50,9 +52,9 @@
                             <field name="total_volume"/>
                             <field name="order_total"/>
                             <field name="warehouse_id"/>
+                            <field name="lead_id"/>
                         </group>
                         <group>
-                            <field name="lead_id"/>
                             <button name="order_confirm" string="Confirm" type="object"/>
                         </group>
                     </group>
@@ -68,6 +70,8 @@
                                     <field name="delivered_qty"/>
                                     <field name="cancelled_qty"/>
                                     <field name="warehouse_id"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="subtotal_with_tax"/>
                                 </tree>
                                 <form string="Sales Order Line">
                                     <group>
@@ -81,25 +85,21 @@
                                         <field name="delivered_qty"/>
                                         <field name="cancelled_qty"/>
                                         <field name="warehouse_id"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                        <field name="subtotal_with_tax"/>
+                                        <notebook>
+                                            <page string="Accounting" name="Accounting">
+                                                <field name="tax_ids" widget="many2many_tags"/>
+                                            </page>
+                                        </notebook>
                                     </group>
                                 </form>
                             </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group class="oe_subtotal_footer oe_right" colspan="4" name="sale_total">
+                                    <field name="total_tax"/>
+                                    <field name="total_amount"/>
+                                </group>
+                            </group>
                         </page>
                         <page string="Picking Lines" name="picking_line">
                             <field name="picking_ids">

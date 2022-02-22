@@ -29,6 +29,7 @@
              'views/stock_inventory_line.xml',
              'views/product_stock_update.xml',
              'wizard/product_stock_update_ept.xml',
+             'views/account_tax.xml',
              'security/sale_order_security.xml',
              'security/ir.model.access.csv',
              'data/sequence_stock_picking.xml',

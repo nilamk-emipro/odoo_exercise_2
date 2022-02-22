@@ -18,7 +18,7 @@ class SaleOrderLine(models.Model):
         ('Cancelled', 'Cancelled')
     ], string='State', default='Draft')
     uom_id = fields.Many2one(string="UOM", comodel_name='product.uom.ept')
-    subtotal_without_tax = fields.Float(string="Sub Total", help="SubTotal", compute="compute_subtotal", store=True)
+    subtotal_without_tax = fields.Float(string="Sub Total", help="SubTotal", compute="compute_subtotal_without_tax", store=True)
     stock_move_ids = fields.One2many(string="Stock Move", comodel_name='stock.move.ept', inverse_name='sale_line_id',
                                      readonly=True)
     delivered_qty = fields.Float(string="Delivered Qty", help="Delivered Qty", compute="compute_delivered_qty",
@@ -26,6 +26,8 @@ class SaleOrderLine(models.Model):
     cancelled_qty = fields.Float(string="Cancelled Qty", help="Cancelled Qty", compute="compute_delivered_qty",
                                  store=False)
     warehouse_id = fields.Many2one(string="Warehouse", comodel_name='stock.warehouse.ept')
+    tax_ids = fields.Many2many(string="Customer Taxes", help="Tax", comodel_name='account.tax.ept', domain=[('tax_use', '=', 'Sales')])
+    subtotal_with_tax = fields.Float(string="Sub Total With Tax", help="SubTotalWithTax", compute="compute_subtotal_with_tax", store=True)
 
     @api.onchange('product_id')
     def on_change_product(self):
@@ -33,9 +35,10 @@ class SaleOrderLine(models.Model):
             self.unit_price = self.product_id.sale_price
             self.quantity = 1
             self.name = self.product_id.name
+            self.tax_ids = self.product_id.tax_ids
 
     @api.depends('quantity', 'unit_price')
-    def compute_subtotal(self):
+    def compute_subtotal_without_tax(self):
         for order_line in self:
             order_line.subtotal_without_tax = order_line.quantity * order_line.unit_price
 
@@ -50,3 +53,14 @@ class SaleOrderLine(models.Model):
                     total_cancel_qty += move_line.qty_done
             order_line.delivered_qty = total_del_qty
             order_line.cancelled_qty = total_cancel_qty
+
+    @api.depends('quantity', 'unit_price', 'tax_ids', 'product_id')
+    def compute_subtotal_with_tax(self):
+        for order_line in self:
+            tax_amount = 0
+            for tax_id in self.tax_ids:
+                if tax_id.tax_amount_type == 'Percentage':
+                    tax_amount += (order_line.subtotal_without_tax * tax_id.tax_value) / 100
+                else:
+                    tax_amount += tax_id.tax_value
+            order_line.subtotal_with_tax = order_line.subtotal_without_tax + tax_amount

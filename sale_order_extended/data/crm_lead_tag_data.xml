@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_tag_new" model="crm.tag">
+        <field name="name">From Lead</field>
+    </record>
+</odoo>

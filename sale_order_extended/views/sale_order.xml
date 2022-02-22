@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="date_order" position="after">
+                <field name="opportunity_new_id"/>
+            </field>
+            <button name="action_confirm" position="after">
+                <button name="add_deposit_product" string="Add Deposit" type="object"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_invoice']" position="after">
+                <button name="scan_product" string="Scan Product"
+                        type="object"
+                        class="oe_stat_button">
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

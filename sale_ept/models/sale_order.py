@@ -3,6 +3,7 @@ import dateutil.utils
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
+
 class SaleOrder(models.Model):
     _name = 'sale.order.ept'
     _description = 'Sale Order Demo'
@@ -34,6 +35,8 @@ class SaleOrder(models.Model):
     picking_ids = fields.One2many(string="Picking", comodel_name='stock.picking.ept', inverse_name='sale_order_id',
                                   readonly=True)
     delivery_order_count = fields.Float(compute="compute_delivery_order_count", store=False)
+    total_tax = fields.Float(string="Total Tax", help="TotalTax", compute="compute_total_tax", store=True)
+    total_amount = fields.Float(string="Total Amount", help="Total Amount", compute="compute_total_amount", store=True)
 
     @api.model
     def create(self, vals):
@@ -65,6 +68,22 @@ class SaleOrder(models.Model):
             total = total + order.subtotal_without_tax
         self.order_total = total
 
+    @api.depends('order_line_ids.subtotal_with_tax')
+    def compute_total_tax(self):
+        for order in self:
+            totaltax = 0
+            for line in order.order_line_ids:
+                totaltax += (line.subtotal_with_tax - line.subtotal_without_tax)
+            order.total_tax = totaltax
+
+    @api.depends('order_line_ids')
+    def compute_total_amount(self):
+        for order in self:
+            totalamount = 0
+            for line in order.order_line_ids:
+                totalamount += line.subtotal_with_tax
+            order.total_amount = totalamount
+
     @api.onchange('partner_id')
     def on_change_partner(self):
         if self.partner_id:
@@ -91,8 +110,9 @@ class SaleOrder(models.Model):
 
             source_location_id = self.warehouse_id.stock_location_id.id
             destination_location_id = self.env['stock.location.ept'].search(
-                            [('address_type', '=', 'Customer')], limit=1).id
-            product_name = str(self.warehouse_id.name) + ' -> ' + str(self.env['stock.location.ept'].search([('address_type', '=', 'Customer')],limit=1).name)
+                [('address_type', '=', 'Customer')], limit=1).id
+            product_name = str(self.warehouse_id.name) + ' -> ' + str(
+                self.env['stock.location.ept'].search([('address_type', '=', 'Customer')], limit=1).name)
 
             warehouses = [self.warehouse_id.id]
             for order_line in self.order_line_ids:
@@ -101,7 +121,8 @@ class SaleOrder(models.Model):
 
             for warehouse in warehouses:
                 if warehouse == self.warehouse_id.id:
-                    for order_line in self.order_line_ids.filtered(lambda child_id: child_id.warehouse_id.id == False or child_id.warehouse_id.id == self.warehouse_id.id):
+                    for order_line in self.order_line_ids.filtered(
+                            lambda child_id: child_id.warehouse_id.id == False or child_id.warehouse_id.id == self.warehouse_id.id):
                         order_line.state = 'Confirmed'
                         stock_move_line.append(
                             (0, 0, {
@@ -116,7 +137,8 @@ class SaleOrder(models.Model):
                             })
                         )
                 else:
-                    for order_line in self.order_line_ids.filtered(lambda child_id: child_id.warehouse_id.id == warehouse):
+                    for order_line in self.order_line_ids.filtered(
+                            lambda child_id: child_id.warehouse_id.id == warehouse):
                         order_line.state = 'Confirmed'
                         stock_move_line.append(
                             (0, 0, {

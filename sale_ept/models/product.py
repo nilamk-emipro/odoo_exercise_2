@@ -22,6 +22,7 @@ class Product(models.Model):
     description = fields.Char(string="Description", help="Description of Product")
     product_stock = fields.Float(string="Product Stock", help="Product Stock",
                                  compute="compute_product_stock", store=False)
+    tax_ids = fields.Many2many(string="Customer Taxes", help="Tax", comodel_name='account.tax.ept', domain=[('tax_use', '=', 'Sales')])
 
     def compute_product_stock(self):
         total_in = 0

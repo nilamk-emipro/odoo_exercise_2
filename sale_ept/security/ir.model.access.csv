@@ -39,3 +39,5 @@ access_product_stock_update_manager,res.product.stock.update.manager.ept,model_p
 access_product_stock_update_user,res.product.stock.update.user.ept,model_product_stock_update_ept,group_sale_order_salesperson,1,1,1,1
 access_product_stock_update_ept_manager,res.product.stock.update.manager.ept1,model_product_stock_update_ept1,group_sale_order_manager,1,1,1,1
 access_product_stock_update_ept_user,res.product.stock.update.user.ept1,model_product_stock_update_ept1,group_sale_order_salesperson,1,1,1,1
+access_account_tax_ept_manager,res.account.tax.manager.ept,model_account_tax_ept,group_sale_order_manager,1,1,1,1
+access_account_tax_ept_user,res.account.tax.user.ept,model_account_tax_ept,group_sale_order_salesperson,1,1,1,1
