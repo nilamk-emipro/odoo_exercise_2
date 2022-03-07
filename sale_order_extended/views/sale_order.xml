@@ -6,10 +6,25 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <field name="date_order" position="after">
+                <field name="is_all_picking_completed"/>
                 <field name="opportunity_new_id"/>
             </field>
+            <field name="sale_order_template_id" position="after">
+                <field name="product_template_ids" widget="many2many_tags"/>
+            </field>
+            <field name="tax_totals_json" position="after">
+                <field name="profit_value"/>
+                <field name="profit_percentage"/>
+            </field>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                   position="after">
+                <field name="add_warehouse_id"/>
+                <field name="order_line_profit_value"/>
+                <field name="order_line_profit_percentage"/>
+            </xpath>
             <button name="action_confirm" position="after">
                 <button name="add_deposit_product" string="Add Deposit" type="object"/>
+                <button name="confirm_and_validate" string="Confirm And Validate" type="object"/>
             </button>
         </field>
     </record>
@@ -26,5 +41,28 @@
                 </button>
             </xpath>
         </field>
+    </record>
+
+    <record id="sale_order_search_view_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='activities_upcoming_all']" position="before">
+                <filter string="Order Completed" name="is_all_picking_completed"
+                        domain="[('is_all_picking_completed', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_merge_sale_order" model="ir.actions.act_window">
+        <field name="name">Merge Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">merge.orders</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="target">new</field>
+        <field name="context">{'default_selected_ids': active_ids}</field>
+        <field name="view_id" ref="sale_order_extended.view_merge_order_form"/>
     </record>
 </odoo>
