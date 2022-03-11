@@ -11,6 +11,8 @@
     'data': ['views/country.xml',
              'views/states.xml',
              'views/city.xml',
+             'report/country_report.xml',
+             'report/country_report_template.xml',
              'security/country_security.xml',
              'security/state_security.xml',
              'security/city_security.xml',

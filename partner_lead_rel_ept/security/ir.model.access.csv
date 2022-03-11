@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_lead_manager,partner.lead.rel.ept.manager,model_partner_lead_rel_ept,sales_team.group_sale_salesman,1,1,1,1
+access_partner_lead_user,partner.lead.rel.ept.user,model_partner_lead_rel_ept,sales_team.group_sale_salesman,1,1,1,1
+access_salesperson_lead_manager,salesperson.lead.manager,model_salesperson_lead_count,sales_team.group_sale_salesman,1,1,1,1
+access_salesperson_lead_user,salesperson.lead.user,model_salesperson_lead_count,sales_team.group_sale_salesman,1,1,1,1

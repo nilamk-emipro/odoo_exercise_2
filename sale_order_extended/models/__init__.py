@@ -4,3 +4,4 @@ from . import sale_order
 from . import crm_lead_new
 from . import product_product
 from . import sale_order_line
+from . import res_config_settings

@@ -85,7 +85,6 @@ class ProductStockUpdate(models.TransientModel):
             else:
                 sale_order_line.copy(default={'order_id': sale_order_id.id})
 
-
     def delete_all_order(self, selected_orders):
         """
         delete the records which is selected and another record was from them

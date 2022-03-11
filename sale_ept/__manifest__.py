@@ -33,6 +33,8 @@
              'security/sale_order_security.xml',
              'security/ir.model.access.csv',
              'data/sequence_stock_picking.xml',
+             'report/report_sale_order.xml',
+             'report/report_sale_order_template.xml',
              ],
     'installable': True,
     'auto_install': False,

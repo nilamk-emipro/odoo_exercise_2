@@ -27,8 +27,8 @@ class SaleOrderLine(models.Model):
 
     def _prepare_procurement_values(self, group_id=False):
         values = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
-        if self.add_warehouse_id != self.order_id.warehouse_id or not self.add_warehouse_id:
-            values.update({
-                'warehouse_id': self.add_warehouse_id
-            })
+        # if self.add_warehouse_id:
+        #     values.update({
+        #         'warehouse_id': self.add_warehouse_id
+        #     })
         return values

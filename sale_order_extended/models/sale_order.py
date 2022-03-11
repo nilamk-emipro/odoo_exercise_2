@@ -123,3 +123,7 @@ class SaleOrder(models.Model):
 
         for line in self.order_line:
             line.product_id_change()
+
+    @api.model
+    def create(self, vals):
+        return super(SaleOrder, self).create(vals)

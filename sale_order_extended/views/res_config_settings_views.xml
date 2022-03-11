@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_form_extended" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit.sale.extended</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='pricelist_configuration']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box"
+                     id="group_sale_payment_term"
+                     title="Payment Term">
+                    <div class="o_setting_left_pane">
+                        <field name="group_sale_payment_term"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="group_sale_payment_term"/>
+                        <div class="text-muted">
+                            Group Payment Term
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box"
+                     id="module_employee_ept"
+                     title="Employee">
+                    <div class="o_setting_left_pane">
+                        <field name="module_employee_ept"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="module_employee_ept"/>
+                        <div class="text-muted">
+                            Import Module Employee ept
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="col-12 col-lg-6 o_setting_box"-->
+<!--                     id="sale_payment_term_id"-->
+<!--                     title="Payment Term">-->
+<!--                    <div class="o_setting_left_pane">-->
+<!--                        <field name="sale_payment_term_id"/>-->
+<!--                    </div>-->
+<!--                    <div class="o_setting_right_pane">-->
+<!--                        <label for="sale_payment_term_id"/>-->
+<!--                        <div class="text-muted">-->
+<!--                            Default Payment Term-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </xpath>
+        </field>
+    </record>
+</odoo>
