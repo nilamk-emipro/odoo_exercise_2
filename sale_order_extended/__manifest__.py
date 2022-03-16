@@ -15,8 +15,11 @@
              'data/crm_lead_tag_data.xml',
              'data/product_data.xml',
              'wizard/merge_orders.xml',
+             'wizard/sales_person.xml',
              'security/ir.model.access.csv',
-             'security/sale_security.xml'
+             'security/sale_security.xml',
+             'report/sale_order_report.xml',
+             'report/sale_order_report_template.xml',
              ],
     'installable': True,
     'auto_install': False,

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sales_person_report_form" model="ir.ui.view">
+        <field name="name">sales.person.form</field>
+        <field name="model">sales.person</field>
+        <field name="arch" type="xml">
+            <form string="Sale Orders Report">
+                <group>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="sale_person_id"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

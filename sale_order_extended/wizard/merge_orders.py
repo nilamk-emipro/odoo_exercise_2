@@ -38,17 +38,12 @@ class ProductStockUpdate(models.TransientModel):
             'partner_id': selected_orders.partner_id.ids[0]
         })
         for sale_order_line in selected_orders.order_line:
-            if self.env['sale.order.line'].search([('order_id', '=', sale_order_id.id),
-                                                   ('product_id', '=', sale_order_line.product_id.id),
-                                                   ('price_unit', '=', sale_order_line.price_unit),
-                                                   ('tax_id', '=', sale_order_line.tax_id.ids)]):
-                existing_order_line = self.env['sale.order.line'].search([('order_id', '=', sale_order_id.id),
-                                                                          ('product_id', '=',
-                                                                           sale_order_line.product_id.id),
-                                                                          ('price_unit', '=',
-                                                                           sale_order_line.price_unit),
-                                                                          ('tax_id', '=', sale_order_line.tax_id.ids)])
-                existing_order_line.product_uom_qty = existing_order_line.product_uom_qty + sale_order_line.product_uom_qty
+            line = selected_orders.order_line.search([('order_id', '=', sale_order_id.id),
+                                                      ('product_id', '=', sale_order_line.product_id.id),
+                                                      ('price_unit', '=', sale_order_line.price_unit),
+                                                      ('tax_id', 'in', sale_order_line.tax_id.ids)])
+            if line:
+                sale_order_line.product_uom_qty += line.product_uom_qty
             else:
                 sale_order_line.copy(default={'order_id': sale_order_id.id})
 
@@ -59,9 +54,11 @@ class ProductStockUpdate(models.TransientModel):
         :return: 
         """
         if self.merge_order_id:
-            (selected_orders - self.merge_order_id).state = 'cancel'
+            # (selected_orders - self.merge_order_id).state = 'cancel'
+            (selected_orders - self.merge_order_id).action_cancel()
         else:
-            selected_orders.state = 'cancel'
+            # selected_orders.state = 'cancel'
+            selected_orders.action_cancel()
 
     def merge_all_order(self, selected_orders):
         """
@@ -71,19 +68,14 @@ class ProductStockUpdate(models.TransientModel):
         """
         sale_order_id = self.merge_order_id.id
         for sale_order_line in selected_orders.order_line:
-            if self.env['sale.order.line'].search([('order_id', '=', sale_order_id),
-                                                   ('product_id', '=', sale_order_line.product_id.id),
-                                                   ('price_unit', '=', sale_order_line.price_unit),
-                                                   ('tax_id', '=', sale_order_line.tax_id.ids)]):
-                existing_order_line = self.env['sale.order.line'].search([('order_id', '=', sale_order_id),
-                                                                          ('product_id', '=',
-                                                                           sale_order_line.product_id.id),
-                                                                          ('price_unit', '=',
-                                                                           sale_order_line.price_unit),
-                                                                          ('tax_id', '=', sale_order_line.tax_id.ids)])
-                existing_order_line.product_uom_qty = existing_order_line.product_uom_qty + sale_order_line.product_uom_qty
+            line = selected_orders.order_line.search([('order_id', '=', sale_order_id),
+                                                      ('product_id', '=', sale_order_line.product_id.id),
+                                                      ('price_unit', '=', sale_order_line.price_unit),
+                                                      ('tax_id', 'in', sale_order_line.tax_id.ids)])
+            if line:
+                sale_order_line.product_uom_qty += line.product_uom_qty
             else:
-                sale_order_line.copy(default={'order_id': sale_order_id.id})
+                sale_order_line.copy(default={'order_id': sale_order_id})
 
     def delete_all_order(self, selected_orders):
         """
@@ -96,13 +88,20 @@ class ProductStockUpdate(models.TransientModel):
         else:
             selected_orders.unlink()
 
+    # @api.model
+    # def default_get(self, field_list=[]):
+    #     ret = super(ProductStockUpdate, self).default_get(field_list)
+    #     orders = self.env.context.get('active_ids')
+    #     return ret
+
     def merge_order(self):
         if self.env['sale.order'].search(
-                [('id', 'in', self.env.context.get('default_selected_ids')), ('state', '!=', 'draft')]):
+                [('id', 'in', self.merge_order_id.ids), ('state', '!=', 'draft')]):
             raise ValidationError("All Orders are having draft State")
 
+        # selected_orders = self.merge_order_id.ids
         selected_orders = self.env['sale.order'].browse(self.env.context.get('default_selected_ids'))
-        all_customer = all(order == selected_orders.partner_id.ids[0] for order in selected_orders.partner_id.ids)
+        all_customer = all(order == selected_orders.partner_id.ids[0] for order in self.merge_order_id.partner_id.ids)
         if all_customer == False:
             raise ValidationError("Only same customer order only can merge")
 

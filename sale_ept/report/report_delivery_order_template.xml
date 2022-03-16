@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_delivery_order_ept">
+            <t t-call="web.html_container">
+                <table>
+                    <tbody>
+                        <t t-foreach="products" t-as="product">
+                            <t t-set="total" t-value="0"/>
+                            <tr>
+                                <th class="table-active text-left" style="height:4rem;">
+                                    <span t-esc="product.name"/>
+                                    <br/>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Picking</th>
+                                <th>Quantity</th>
+                            </tr>
+                            <t t-foreach="docs" t-as="move">
+                                <t t-if="move['product'] == product.id">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="move['picking']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="move['quantity']"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="total" t-value="total + int(move['quantity'])"/>
+                                </t>
+                            </t>
+                            <tr>
+                                <th>Total :
+                                    <span t-esc="total"/>
+                                </th>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+        <template id="report_delivery_order_location_ept">
+            <t t-call="web.html_container">
+                <table>
+                    <tbody>
+                        <t t-foreach="locations" t-as="location">
+                            <tr>
+                                <th class="table-active text-left" style="height:4rem;">
+                                    <span t-esc="location.name"/>
+                                    <br/>
+                                </th>
+                            </tr>
+                            <t t-foreach="products" t-as="product">
+                                <t t-set="total" t-value="0"/>
+                                <tr>
+                                    <th class="table-active text-left" style="height:4rem;">
+                                        <span t-esc="product.name"/>
+                                        <p><t t-out="product.name"/></p>
+                                        <br/>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Picking</th>
+                                    <th>Quantity</th>
+                                </tr>
+                                <t t-foreach="docs" t-as="move">
+                                    <t t-if="move['product'] == product.id and move['location'] == location.id">
+                                        <tr>
+                                            <td>
+                                                <span t-esc="move['picking']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="move['quantity']"/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="total" t-value="total + int(move['quantity'])"/>
+                                    </t>
+                                </t>
+                                <tr>
+                                    <th>Total :
+                                        <span t-esc="total"/>
+                                    </th>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+    </data>
+</odoo>

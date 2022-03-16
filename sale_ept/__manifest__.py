@@ -35,6 +35,8 @@
              'data/sequence_stock_picking.xml',
              'report/report_sale_order.xml',
              'report/report_sale_order_template.xml',
+             'report/report_delivery_order.xml',
+             'report/report_delivery_order_template.xml',
              ],
     'installable': True,
     'auto_install': False,

@@ -126,6 +126,8 @@ class PartnerLead(models.Model):
         those are make invoice with full payments but not delivery order not validated
         :return:
         """
+        if not self.to_date:
+            self.to_date = fields.Date.today()
         action = self.env["ir.actions.actions"]._for_xml_id("partner_lead_rel_ept.action_partner_lead_view_sale_order")
         action['domain'] = [('opportunity_id', 'in', self.lead_ids.ids),
                             ('invoice_ids.payment_state', 'in', ['paid', 'in_payment']),

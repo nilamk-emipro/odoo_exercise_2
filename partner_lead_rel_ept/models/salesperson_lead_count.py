@@ -50,4 +50,3 @@ class SalesPersonLeadCount(models.Model):
             sale_person_line.sum_total_amount = sum(line.price_subtotal for line in sale_order_ids.order_line)
             expected_revenue = sum(lead.expected_revenue for lead in sale_person_line.lead_ids)
             sale_person_line.percentage_revenue_to_order_amount = (sale_person_line.total_revenue * 100) / expected_revenue
-            # sale_person_line.percentage_revenue_to_order_amount = 0

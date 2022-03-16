@@ -7,7 +7,10 @@
             <form string="Merge Orders">
                 <group>
                     <field name="merge_option" widget="radio"/>
-                    <field name="merge_order_id" attrs="{'invisible': [('merge_option', 'not in', ['merge_cancel','merge_delete'])]}"/>
+                    <field name="merge_order_id"
+                           attrs="{'invisible': [('merge_option', 'not in', ['merge_cancel','merge_delete'])]}">
+
+                    </field>
                 </group>
                 <footer>
                     <button name="merge_order" string="Merge Order" type="object" class="btn-primary"/>

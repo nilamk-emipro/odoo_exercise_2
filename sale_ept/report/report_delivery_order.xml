@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_delivery_order_ept" model="ir.actions.report">
+            <field name="name">Delivery Order</field>
+            <field name="model">stock.picking.ept</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sale_ept.report_delivery_order_ept</field>
+            <field name="print_report_name">'Order - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_stock_picking_ept"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_delivery_order_location_ept" model="ir.actions.report">
+            <field name="name">Delivery Order With Location</field>
+            <field name="model">stock.picking.ept</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sale_ept.report_delivery_order_location_ept</field>
+            <field name="print_report_name">'Order - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_stock_picking_ept"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>
