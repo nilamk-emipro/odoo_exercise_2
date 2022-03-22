@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+    <t t-name="some.template">
+        <h1>Hello Odoo</h1>
+    </t>
+    <div t-name="some.template">
+    <span class="val"><t t-esc="widget.count"/></span>
+        <button>Increment</button>
+    </div>
+</template>
+
+
+

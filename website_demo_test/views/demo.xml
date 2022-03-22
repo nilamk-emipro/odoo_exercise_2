@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!--        <record id="action_demo_website" model="ir.actions.client">-->
+<!--            <field name="name">Website Demo</field>-->
+<!--        </record>-->
+
+    <menuitem id="menu_website_base_root" name="Demo Website"/>
+    <menuitem id="menu_website_base" name="Demo Website" parent="menu_website_base_root"/>
+
+</odoo>

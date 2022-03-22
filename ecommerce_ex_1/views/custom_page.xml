@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="assets_frontend" name="Product assets">
+
+        </template>
+        <template id="custom_page" name="Product Details">
+            <t t-call="website.layout">
+                <div class="container">
+                    <br/>
+                    <center>
+                        <button type="button" role="button" class="btn btn-primary show_product" title="Product Data">
+                            Product detail
+                        </button>
+                        <br/>
+                        <div class="product_div">
+                        </div>
+                    </center>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
