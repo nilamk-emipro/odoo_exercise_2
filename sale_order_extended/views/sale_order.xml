@@ -55,23 +55,23 @@
         </field>
     </record>
 
-    <record id="action_merge_sale_order" model="ir.actions.act_window">
-        <field name="name">Merge Orders</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">merge.orders</field>
-        <field name="view_mode">form</field>
-        <field name="binding_model_id" ref="sale.model_sale_order"/>
-        <field name="target">new</field>
-        <field name="view_id" ref="sale_order_extended.view_merge_order_form"/>
-    </record>
+<!--    <record id="action_merge_sale_order" model="ir.actions.act_window">-->
+<!--        <field name="name">Merge Orders</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">merge.orders</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="target">new</field>-->
+<!--        <field name="view_id" ref="sale_order_extended.view_merge_order_form"/>-->
+<!--    </record>-->
 
-    <record id="action_sales_person_report" model="ir.actions.act_window">
-        <field name="name">Report</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">sales.person</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="binding_model_id" ref="sale.model_sale_order"/>
-        <field name="view_id" ref="sale_order_extended.view_sales_person_report_form"/>
-    </record>
+<!--    <record id="action_sales_person_report" model="ir.actions.act_window">-->
+<!--        <field name="name">Report</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">sales.person</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="target">new</field>-->
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="view_id" ref="sale_order_extended.view_sales_person_report_form"/>-->
+<!--    </record>-->
 </odoo>

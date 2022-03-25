@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="products_brands" inherit_id="website_sale.products_attributes">
+        <xpath expr="//form[hasclass('js_attributes')]" position="inside">
+            <!--            <form class="js_attributes mb-2" method="get">-->
+            BRANDS
+            <ul class="nav flex-column">
+                <t t-foreach="product_brand" t-as="v">
+                    <div class="flex-column">
+                        <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" name="brands" class="custom-control-input"
+                                   t-att-id="'%s' % (v.id)" t-att-value="'%s' % (v.id)"
+                                   t-att-checked="'checked' if v.id in brand_set else None"/>
+                            <label class="custom-control-label font-weight-normal"
+                                   t-att-for="'%s' % (v.id)" t-field="v.name"/>
+                        </div>
+                    </div>
+                </t>
+            </ul>
+            <!--            </form>-->
+        </xpath>
+    </template>
+
+    <record model="ir.ui.view" id="product_template_brand_ept">
+        <field name="name">product.template.form.brand.ept</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="product_brand_ept_id" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+</odoo>

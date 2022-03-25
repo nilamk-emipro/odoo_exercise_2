@@ -22,10 +22,10 @@ class SalesPersonLeadCount(models.Model):
                                                       help="percentage of conversation amount from expected revenue to sales order total amount.",
                                                       compute='compute_calculate_total')
     partner_lead_id = fields.Many2one(string="Partner Lead Rel", comodel_name='partner.lead.rel.ept')
-    lead_ids = fields.Many2many(string="Lead", comodel_name='crm.lead',
-                                domain="['|',('partner_id','=',partner_id),('partner_id','=',partner_contact_ids)]")
+    # lead_ids = fields.Many2many(string="Lead", comodel_name='crm.lead',
+    #                             domain="['|',('partner_id','=',partner_id),('partner_id','=',partner_contact_ids)]")
 
-    @api.depends('lead_ids')
+    @api.depends('partner_lead_id.lead_ids')
     def compute_calculate_total(self):
         """
         compute count of pipeline as count of lead with sales person
@@ -37,16 +37,16 @@ class SalesPersonLeadCount(models.Model):
         :return:
         """
         for sale_person_line in self:
-            sale_person_line.count_num_pipeline = len(sale_person_line.lead_ids)
+            sale_person_line.count_num_pipeline = len(sale_person_line.partner_lead_id.lead_ids)
             sale_person_line.total_quotation = len(
-                self.env['sale.order'].search([('opportunity_id', 'in', sale_person_line.lead_ids.ids),
+                self.env['sale.order'].search([('opportunity_id', 'in', sale_person_line.partner_lead_id.lead_ids.ids),
                                                ('state', '=', 'draft'),
                                                ('user_id', '=', sale_person_line.sales_person_name.id)]))
-            sale_order_ids = self.env['sale.order'].search([('opportunity_id', 'in', sale_person_line.lead_ids.ids),
+            sale_order_ids = self.env['sale.order'].search([('opportunity_id', 'in', sale_person_line.partner_lead_id.lead_ids.ids),
                                                             ('state', '=', 'sale'),
                                                             ('user_id', '=', sale_person_line.sales_person_name.id)])
             sale_person_line.total_revenue = sum(order.amount_total for order in sale_order_ids)
             sale_person_line.total_sale_order = len(sale_order_ids)
             sale_person_line.sum_total_amount = sum(line.price_subtotal for line in sale_order_ids.order_line)
-            expected_revenue = sum(lead.expected_revenue for lead in sale_person_line.lead_ids)
-            sale_person_line.percentage_revenue_to_order_amount = (sale_person_line.total_revenue * 100) / expected_revenue
+            expected_revenue = sum(lead.expected_revenue for lead in sale_person_line.partner_lead_id.lead_ids)
+            sale_person_line.percentage_revenue_to_order_amount = (sale_person_line.total_revenue * 100)

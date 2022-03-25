@@ -99,9 +99,8 @@ class PartnerLead(models.Model):
         exists_salesperson = self.salesperson_lead_count_ids.sales_person_name.ids
         for sale_person in sale_persons:
             if sale_person not in exists_salesperson:
-                lead_ids = self.lead_ids.filtered(lambda child_id: child_id.user_id.id == sale_person)
+                # lead_ids = self.lead_ids.filtered(lambda child_id: child_id.user_id.id == sale_person)
                 salesperson_lead.append((0, 0, {'sales_person_name': sale_person,
-                                                'lead_ids': lead_ids,
                                                 'partner_lead_id': self.id}))
         self.salesperson_lead_count_ids = salesperson_lead
 
